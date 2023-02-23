@@ -1,0 +1,130 @@
+
+html, body{
+
+}
+
+#card-holder {
+    min-width: 450px;
+    max-height: 100vh !important;
+    max-width: 100vw;
+    min-height: 500px;
+}    
+
+table.main-game {
+    table-layout: fixed;
+    width:50vh;
+    border-collapse: separate;
+    vertical-align: center;
+    margin: auto;
+  }
+
+tr.word-container td {
+    position: relative;
+    padding-bottom: 15%; /* Set the padding as a percentage of the width */
+    border: .4vh solid rgb(255, 255, 255);
+    text-align: center;
+    vertical-align: middle; rgb(0, 0, 0);
+    background-color: rgb(217, 217, 215);
+
+}
+
+div.letter-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow-y: hidden;
+}
+
+div.letter-container * {
+    flex-grow: 1;
+}
+
+span.game-letters {
+    position: absolute;
+    font-family: 'Shantell Sans', cursive;
+    font-size: 7vh;
+    text-align: center;
+    max-width: 80%;
+    white-space: nowrap;
+}
+
+.title {
+    font-size: 6vh;
+    font-family: 'Shantell Sans', cursive;
+}
+
+
+div.keyboard {
+    text-align: center;
+    vertical-align: middle;
+}
+
+table.key-table {
+    table-layout: fixed;
+    border-collapse: separate;
+  }
+
+table.key-row-one {
+
+    width: 56vh;
+    margin:auto
+}
+
+  tr.key-row-container td {
+    position: relative;
+    padding-bottom: 13%; /* Set the padding as a percentage of the width */
+    border: 0.4vh solid rgb(255, 255, 255);
+    border-radius: 2vh;
+    text-align: center;
+    vertical-align: middle; rgb(0, 0, 0);
+    background-color: rgb(217, 217, 215);
+
+}
+
+div.key-letter-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow-y: hidden;
+}
+
+div.key-letter-container * {
+    flex-grow: 1;
+}
+
+button.key-letters {
+    height: 100%;
+    width: 100%;
+    margin: 0%;
+    padding: 0%;
+    border-radius: 0%;
+    position: absolute;
+    font-family: 'Shantell Sans', cursive;
+    font-size: 3vh;
+    text-align: center;
+    max-width: 100%;
+    white-space: nowrap;
+}
+
+table.key-row-two {
+    width: 50vh;
+    margin: auto;
+}
+
+tr.key-row-container td.special {
+    width: 15%;
+}
+
+#enter {
+    font-size: 1.7vh;
+}
