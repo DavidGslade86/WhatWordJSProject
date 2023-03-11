@@ -5,6 +5,47 @@ height: 100%;
 
 }
 
+div.opaque-cover {
+    top: 0;
+    left: 0;
+    margin: 0;
+    height: 100vh;
+    width: 100%;
+    position: absolute;
+    background:rgba(0, 0, 0, 0.6);
+    z-index: 999;
+}
+
+div.error {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.6vw;
+    padding: 5%;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    background: rgb(237, 197, 244);
+    width: 40%;
+    border: .4vw solid rgb(244, 157, 221) 
+}
+
+div.winner, div.loser {
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: 10%;
+    font-size:3vw;
+    text-align: center;
+    padding: 5%;
+    margin-left: auto;
+    margin-right: auto;
+    width: 40%;
+    position: relative;
+    background: rgb(224, 242, 222);
+    z-index: 1000;
+}
+
+#playAgain {
+    margin-bottom: 3vh;
+}
+
 #card-holder {
     margin-left: auto;
     margin-right: auto;
@@ -21,6 +62,8 @@ table.main-game {
     border-collapse: separate;
     vertical-align: center;
     margin: auto;
+    position: relative;
+    z-index: 1;
   }
 
 tr.word-container td {
@@ -30,7 +73,7 @@ tr.word-container td {
     text-align: center;
     vertical-align: middle;
     background-color: rgb(217, 217, 215);
-
+    z-index: 1;
 }
 
 div.letter-container {
@@ -52,7 +95,7 @@ div.letter-container * {
 span.game-letters {
     position: absolute;
     font-family: 'Shantell Sans', cursive;
-    font-size: 6vw;
+    font-size: 5vw;
     text-align: center;
     max-width: 80%;
     white-space: nowrap;
@@ -100,14 +143,16 @@ div.key-letter-container {
     display: flex;
     align-items: center;
     justify-content: center;
+    border-radius: 2vw;
     overflow-y: hidden;
+    z-index: 1;
 }
 
 div.key-letter-container * {
     flex-grow: 1;
 }
 
-button.key-letters {
+button.key-letters, button.enter-key, button.delete-key {
     height: 100%;
     width: 100%;
     margin: 0%;
@@ -159,6 +204,8 @@ tr.key-row-container td.special {
         border: 2px solid rgb(255, 255, 255);
         border-radius: 9px;
     }
+
+
 }
 
 @media screen and (min-width: 1200px) {
