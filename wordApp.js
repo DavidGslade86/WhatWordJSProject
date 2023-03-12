@@ -1,14 +1,4 @@
 
-//Import word list to array and pick random word
-/*function randomWord(wordText){
-    let fs = require('fs');
-    let wordList = fs.readFileSync(wordText, "utf-8");
-    let wordArray = wordList.split("\n");
-    for (i=0; i < wordArray.length; i++) {
-     wordArray[i] = wordArray[i].slice(0, wordArray[i].length -1);
-    }
-    return wordArray;
-}*/
 
 const wordArray = ['which',
 'there',
@@ -5768,6 +5758,7 @@ const wordArray = ['which',
 'biffy',
 'pupal'];
 
+//global variables
 let choice = Math.floor(Math.random() * (wordArray.length));
 let secretWord = wordArray[choice];
 let letKeys = document.querySelectorAll(".key-letters");
@@ -5776,62 +5767,8 @@ let cellCounter = 0;
 let rowCounter = 1;
 let guessedLetters = "";
 
+//to help me cheat!
 console.log(secretWord);
-
-"rgb(226, 226, 23)"
-
-//checks if user guess contains or matches letters in secret word and changes backgrounds of letter containing UI and Keyboard letters.
-function enterGuess (userWord, secretWord){
-
-    const row = document.querySelector(`#row-${rowCounter}`);
-    const guessCell = row.querySelectorAll('span');
-    const keyRow = document.querySelector('.keyboard');
-    const keyCell = keyRow.querySelectorAll('button');
-    
-    function checkUpdateBkGrnd (cell, color, letter) {
-        cell.forEach(function(guessLet) {
-            if (guessLet.textContent.toLowerCase() === letter.toLowerCase()){
-                guessLet.parentNode.style.backgroundColor = color;
-            }
-        });
-    }
-    
-    let functionSecretWord = secretWord.split('');
-
-    for(let i = 0; i < userWord.length; i++){
-        if(functionSecretWord[i] === userWord[i]){
-            let currCell = document.querySelector(`#guess-${rowCounter}-${i+1}`);
-            currCell.parentNode.style.backgroundColor = "rgb(14, 192, 14)";
-            checkUpdateBkGrnd (keyCell, "rgb(14, 192, 14)", userWord[i]);
-            functionSecretWord[i] = " ";
-            if (guessedLetters.includes(userWord[i]) === false){
-                guessedLetters += userWord[i]
-            }
-            console.log(functionSecretWord);
-            console.log(guessedLetters);
-
-        }
-    } 
-
-    for(let i = 0; i < userWord.length; i++){
-        if (functionSecretWord.includes(userWord[i]) && userWord[i] != functionSecretWord[i]){
-            let currCell = document.querySelector(`#guess-${rowCounter}-${i+1}`);
-            currCell.parentNode.style.backgroundColor = "rgb(226, 226, 23)";
-            if(guessedLetters.includes(userWord[i]) === false){
-                checkUpdateBkGrnd (keyCell, "rgb(226, 226, 23)", userWord[i]);
-            }
-            functionSecretWord[functionSecretWord.indexOf(userWord[i])] = " ";
-            console.log(functionSecretWord);
-
-        } else if (secretWord.includes(userWord[i]) === false && guessedLetters.includes(userWord[i]) === false) {
-            checkUpdateBkGrnd (keyCell, "rgb(153, 150, 150)", userWord[i]);
-        }
-    }
-    rowCounter += 1;
-    cellCounter = 0;
-    userWord = '';
-    return userWord;
-}
 
 //checks if user input word is a word on the wordlist
 function checkWord(userWord, wordArray){
@@ -5843,6 +5780,77 @@ function checkWord(userWord, wordArray){
    return false;
 }
 
+//checks if user guess contains or matches letters in secret word and changes backgrounds of letter containing UI and Keyboard letters.
+function enterGuess (userWord, secretWord){
+
+    const row = document.querySelector(`#row-${rowCounter}`);
+    const guessCell = row.querySelectorAll('span');
+    const keyRow = document.querySelector('.keyboard');
+    const keyCell = keyRow.querySelectorAll('button');
+    
+
+    //function to update table background color if table text content matches letter from userWord 
+    function checkUpdateBkGrnd (cell, color, letter) {
+        cell.forEach(function(guessLet) {
+            if (guessLet.textContent.toLowerCase() === letter.toLowerCase()){
+                guessLet.parentNode.style.backgroundColor = color;
+            }
+        });
+    }
+    
+    //creates array of secret word letters to help account for double letters in guess and secret word
+    let functionSecretWord = secretWord.split('');
+
+    for(let i = 0; i < userWord.length; i++){
+
+        //updates cell background color to green if guess and word letter exactly match
+        if(functionSecretWord[i] === userWord[i]){
+            let currCell = document.querySelector(`#guess-${rowCounter}-${i+1}`);
+            currCell.parentNode.style.backgroundColor = "rgb(14, 192, 14)";
+
+            //updates keyboard background to green if guess and letter exactly match
+            checkUpdateBkGrnd (keyCell, "rgb(14, 192, 14)", userWord[i]);
+            functionSecretWord[i] = " ";
+
+            //creates a guessed letter string to test against to prevent keyboard letters from being reupdated to less precise color 
+            if (guessedLetters.includes(userWord[i]) === false){
+                guessedLetters += userWord[i]
+            }
+
+        //updates background colors to yellow if letter from guess is in secret word but at wrong postion
+        } else if(functionSecretWord.includes(userWord[i]) && userWord[i]){
+            let currCell = document.querySelector(`#guess-${rowCounter}-${i+1}`);
+
+            //changes background only if background has not already been changed to green
+            if (currCell.parentNode.style.backgroundColor !== "rgb(14, 192, 14)") {
+                currCell.parentNode.style.backgroundColor = "rgb(226, 226, 23)";
+            }
+
+            //updates keyboard background of letters in secret word to yellow if letters have not already been guessed
+            if(guessedLetters.includes(userWord[i]) === false){
+                checkUpdateBkGrnd (keyCell, "rgb(226, 226, 23)", userWord[i]);
+            }
+            
+            functionSecretWord[functionSecretWord.indexOf(userWord[i])] = " ";
+            
+            if (guessedLetters.includes(userWord[i]) === false){
+                guessedLetters += userWord[i]
+            }
+        } else if (secretWord.includes(userWord[i]) === false && guessedLetters.includes(userWord[i]) === false) {
+            checkUpdateBkGrnd (keyCell, "rgb(153, 150, 150)", userWord[i]);
+            if (guessedLetters.includes(userWord[i]) === false){
+                guessedLetters += userWord[i]
+            }
+        }
+    } 
+    //advances row, resets cellCounter, and resets userword
+    rowCounter += 1;
+    cellCounter = 0;
+    userWord = '';
+    return userWord;
+}
+
+//maps keyboard buttons with matching text content to corresponding keyboard keystrokes
 document.addEventListener('keydown', function(event){
     letKeys.forEach(function(button){
         if (button.textContent.toLowerCase() == event.key.toLowerCase()){
@@ -5854,13 +5862,13 @@ document.addEventListener('keydown', function(event){
         const deleteButton = document.querySelector('.delete-key');
         deleteButton.click();
     }
-    if (event.key === "Enter" || event.code === 13){
+    if (event.key === "Enter"){
         const enterButton = document.querySelector('.enter-key');
         enterButton.click();
     }
 });
 
-
+//updates UI table with letter matching the text content of keyboad button
 letKeys.forEach((letKey) => {
     letKey.addEventListener('click', function letterClick(){
         if (cellCounter < 5){
@@ -5874,9 +5882,10 @@ letKeys.forEach((letKey) => {
             tableCell.textContent = letter;
 
         }
-    })
+    });
 });
 
+//creates delete key that removes last letter from table and userword
 document.querySelector('.delete-key').addEventListener('click', function removeLetter(){
     if (cellCounter > 0){
         const tableCell = document.querySelector(`#guess-${rowCounter}-${cellCounter}`);
@@ -5886,13 +5895,16 @@ document.querySelector('.delete-key').addEventListener('click', function removeL
     }
 });
 
+//tests userWord for validity and progresses the game
 document.querySelector('.enter-key').addEventListener('click', function progressGame(){
     const endPage = document.querySelector('.opaque-cover');
     
+    //displays modal and losing div if player makes more than 6 guesses
     if(rowCounter > 5){
         endPage.style.display = 'block';
         document.querySelector(".winner").style.display = 'none';
         document.querySelector(".loser").style.display = 'block';
+        document.querySelector("#loseText").innerHTML = `Awww, too bad.  Maybe next time? The secret word was ${secretWord.toUpperCase()}`;
         document.addEventListener('keydown', function(event){
             if (event.key === "Enter"){
                 document.querySelector('#playAgain').click();
@@ -5900,20 +5912,24 @@ document.querySelector('.enter-key').addEventListener('click', function progress
         });
     }
     
+    // displays error if word is less than 5 letters
     if(cellCounter <5){
         const numLetError = document.querySelector('#letterNumError');
         numLetError.style.display = 'block';
         setTimeout(function(){
             numLetError.style.display = 'none';
         },1500);
+
+    //displays error if word is not on wordlist array
     } else if (checkWord(userWord, wordArray) === false){
         const wordError = document.querySelector('#wordError');
         wordError.style.display = 'block';
         setTimeout(function(){
             wordError.style.display = 'none';
         },1500);
-    }
-    else if (userWord === secretWord){
+
+    //displays win screen if correct word is guessed
+    } else if (userWord === secretWord){
         endPage.style.display = 'block';
         document.querySelector(".winner").style.display = 'block';
         document.querySelector(".loser").style.display = 'none';
@@ -5922,13 +5938,10 @@ document.querySelector('.enter-key').addEventListener('click', function progress
                 document.querySelector('#playAgain').click();
             }
         });
+
+    //main gameplay function **see above**
     } else {
         userWord = enterGuess (userWord, secretWord);
     }
 });
-//let choice = Math.floor(Math.random() * (wordArray.length));
-
-
-//console.log(randomWord('word-list.txt'));
-
 
