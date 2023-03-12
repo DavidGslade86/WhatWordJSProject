@@ -5774,6 +5774,7 @@ let letKeys = document.querySelectorAll(".key-letters");
 userWord = '';
 let cellCounter = 0;
 let rowCounter = 1;
+let guessedLetters = "";
 
 console.log(secretWord);
 
@@ -5794,16 +5795,35 @@ function enterGuess (userWord, secretWord){
             }
         });
     }
+    
+    let functionSecretWord = secretWord.split('');
 
     for(let i = 0; i < userWord.length; i++){
-        if (secretWord.includes(userWord[i]) && userWord[i] != secretWord[i]){
-            checkUpdateBkGrnd (guessCell, "rgb(226, 226, 23)", userWord[i]);
-            checkUpdateBkGrnd (keyCell, "rgb(226, 226, 23)", userWord[i]);
-
-        } else if (secretWord[i] === userWord[i]){
-            checkUpdateBkGrnd (guessCell, "rgb(14, 192, 14)", userWord[i]);
+        if(functionSecretWord[i] === userWord[i]){
+            let currCell = document.querySelector(`#guess-${rowCounter}-${i+1}`);
+            currCell.parentNode.style.backgroundColor = "rgb(14, 192, 14)";
             checkUpdateBkGrnd (keyCell, "rgb(14, 192, 14)", userWord[i]);
-        } else if (secretWord.includes(userWord[i]) === false) {
+            functionSecretWord[i] = " ";
+            if (guessedLetters.includes(userWord[i]) === false){
+                guessedLetters += userWord[i]
+            }
+            console.log(functionSecretWord);
+            console.log(guessedLetters);
+
+        }
+    } 
+
+    for(let i = 0; i < userWord.length; i++){
+        if (functionSecretWord.includes(userWord[i]) && userWord[i] != functionSecretWord[i]){
+            let currCell = document.querySelector(`#guess-${rowCounter}-${i+1}`);
+            currCell.parentNode.style.backgroundColor = "rgb(226, 226, 23)";
+            if(guessedLetters.includes(userWord[i]) === false){
+                checkUpdateBkGrnd (keyCell, "rgb(226, 226, 23)", userWord[i]);
+            }
+            functionSecretWord[functionSecretWord.indexOf(userWord[i])] = " ";
+            console.log(functionSecretWord);
+
+        } else if (secretWord.includes(userWord[i]) === false && guessedLetters.includes(userWord[i]) === false) {
             checkUpdateBkGrnd (keyCell, "rgb(153, 150, 150)", userWord[i]);
         }
     }
