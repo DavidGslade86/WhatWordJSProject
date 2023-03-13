@@ -5783,7 +5783,6 @@ function checkWord(userWord, wordArray){
 //checks if user guess contains or matches letters in secret word and changes backgrounds of letter containing UI and Keyboard letters.
 function enterGuess(userWord, secretWord) {
     const row = document.querySelector(`#row-${rowCounter}`);
-    const guessCell = row.querySelectorAll('span');
     const keyRow = document.querySelector('.keyboard');
     const keyCell = keyRow.querySelectorAll('button');
     
@@ -5795,23 +5794,35 @@ function enterGuess(userWord, secretWord) {
         });
     }
     
-    let functionSecretWord = secretWord.split('');
+    const matchArr = [];
+
 
     for(let i = 0; i < userWord.length; i++){
-        if(functionSecretWord[i] === userWord[i]){
+        if(secretWord[i] === userWord[i]){
+            matchArr.push(true);
+        } else {
+            matchArr.push(false);
+        }
+    }
+
+    console.log(matchArr);
+
+    for(let i = 0; i < userWord.length; i++){
+
+        if(secretWord[i] === userWord[i] && matchArr[i] === true){
+
             let currCell = document.querySelector(`#guess-${rowCounter}-${i+1}`);
             currCell.parentNode.style.backgroundColor = "rgb(14, 192, 14)";
             checkUpdateBkGrnd (keyCell, "rgb(14, 192, 14)", userWord[i]);
-            functionSecretWord[i] = " ";
+
             if (guessedLetters.includes(userWord[i]) === false){
                 guessedLetters += userWord[i]
             }
-        } else if (functionSecretWord.includes(userWord[i])) {
+        } else if (secretWord.includes(userWord[i]) && matchArr[i] === false) {
             let currCell = document.querySelector(`#guess-${rowCounter}-${i+1}`);
             if(currCell.parentNode.style.backgroundColor !== "rgb(14, 192, 14)"){
                 currCell.parentNode.style.backgroundColor = "rgb(226, 226, 23)";
             }
-            functionSecretWord[functionSecretWord.indexOf(userWord[i])] = " ";
             if(guessedLetters.includes(userWord[i]) === false){
                 checkUpdateBkGrnd (keyCell, "rgb(226, 226, 23)", userWord[i]);
             }
