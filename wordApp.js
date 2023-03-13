@@ -5795,20 +5795,26 @@ function enterGuess(userWord, secretWord) {
     }
     
     const matchArr = [];
-
+    let doubleLetCheck = secretWord.split("");
 
     for(let i = 0; i < userWord.length; i++){
+
         if(secretWord[i] === userWord[i]){
+
             matchArr.push(true);
+            doubleLetCheck[i] = ' ';
+
         } else {
+
             matchArr.push(false);
+
         }
     }
 
     console.log(matchArr);
 
     for(let i = 0; i < userWord.length; i++){
-
+        
         if(secretWord[i] === userWord[i] && matchArr[i] === true){
 
             let currCell = document.querySelector(`#guess-${rowCounter}-${i+1}`);
@@ -5818,14 +5824,22 @@ function enterGuess(userWord, secretWord) {
             if (guessedLetters.includes(userWord[i]) === false){
                 guessedLetters += userWord[i]
             }
-        } else if (secretWord.includes(userWord[i]) && matchArr[i] === false) {
+
+        } else if (doubleLetCheck.includes(userWord[i]) && matchArr[i] === false) {
+
             let currCell = document.querySelector(`#guess-${rowCounter}-${i+1}`);
+
             if(currCell.parentNode.style.backgroundColor !== "rgb(14, 192, 14)"){
                 currCell.parentNode.style.backgroundColor = "rgb(226, 226, 23)";
             }
+
             if(guessedLetters.includes(userWord[i]) === false){
                 checkUpdateBkGrnd (keyCell, "rgb(226, 226, 23)", userWord[i]);
             }
+
+            doubleLetCheck[doubleLetCheck.indexOf(userWord[i])] = " ";
+            console.log(doubleLetCheck);
+
         } else if (secretWord.includes(userWord[i]) === false && guessedLetters.includes(userWord[i]) === false) {
             checkUpdateBkGrnd (keyCell, "rgb(153, 150, 150)", userWord[i]);
         }
@@ -5841,7 +5855,6 @@ document.addEventListener('keydown', function(event){
     letKeys.forEach(function(button){
         if (button.textContent.toLowerCase() == event.key.toLowerCase()){
             button.click();
-
         }
     });
     if (event.key.toLowerCase() === 'backspace' || event.key.toLowerCase() === 'delete' || event.code === 46){
