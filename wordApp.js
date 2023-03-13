@@ -5781,15 +5781,12 @@ function checkWord(userWord, wordArray){
 }
 
 //checks if user guess contains or matches letters in secret word and changes backgrounds of letter containing UI and Keyboard letters.
-function enterGuess (userWord, secretWord){
-
+function enterGuess(userWord, secretWord) {
     const row = document.querySelector(`#row-${rowCounter}`);
     const guessCell = row.querySelectorAll('span');
     const keyRow = document.querySelector('.keyboard');
     const keyCell = keyRow.querySelectorAll('button');
     
-
-    //function to update table background color if table text content matches letter from userWord 
     function checkUpdateBkGrnd (cell, color, letter) {
         cell.forEach(function(guessLet) {
             if (guessLet.textContent.toLowerCase() === letter.toLowerCase()){
@@ -5798,52 +5795,30 @@ function enterGuess (userWord, secretWord){
         });
     }
     
-    //creates array of secret word letters to help account for double letters in guess and secret word
     let functionSecretWord = secretWord.split('');
 
     for(let i = 0; i < userWord.length; i++){
-
-        //updates cell background color to green if guess and word letter exactly match
         if(functionSecretWord[i] === userWord[i]){
             let currCell = document.querySelector(`#guess-${rowCounter}-${i+1}`);
             currCell.parentNode.style.backgroundColor = "rgb(14, 192, 14)";
-
-            //updates keyboard background to green if guess and letter exactly match
             checkUpdateBkGrnd (keyCell, "rgb(14, 192, 14)", userWord[i]);
             functionSecretWord[i] = " ";
-
-            //creates a guessed letter string to test against to prevent keyboard letters from being reupdated to less precise color 
             if (guessedLetters.includes(userWord[i]) === false){
                 guessedLetters += userWord[i]
             }
-
-        //updates background colors to yellow if letter from guess is in secret word but at wrong postion
-        } else if(functionSecretWord.includes(userWord[i]) && userWord[i]){
+        } else if (functionSecretWord.includes(userWord[i])) {
             let currCell = document.querySelector(`#guess-${rowCounter}-${i+1}`);
-
-            //changes background only if background has not already been changed to green
-            if (currCell.parentNode.style.backgroundColor !== "rgb(14, 192, 14)") {
+            if(currCell.parentNode.style.backgroundColor !== "rgb(14, 192, 14)"){
                 currCell.parentNode.style.backgroundColor = "rgb(226, 226, 23)";
             }
-
-            //updates keyboard background of letters in secret word to yellow if letters have not already been guessed
+            functionSecretWord[functionSecretWord.indexOf(userWord[i])] = " ";
             if(guessedLetters.includes(userWord[i]) === false){
                 checkUpdateBkGrnd (keyCell, "rgb(226, 226, 23)", userWord[i]);
             }
-            
-            functionSecretWord[functionSecretWord.indexOf(userWord[i])] = " ";
-            
-            if (guessedLetters.includes(userWord[i]) === false){
-                guessedLetters += userWord[i]
-            }
         } else if (secretWord.includes(userWord[i]) === false && guessedLetters.includes(userWord[i]) === false) {
             checkUpdateBkGrnd (keyCell, "rgb(153, 150, 150)", userWord[i]);
-            if (guessedLetters.includes(userWord[i]) === false){
-                guessedLetters += userWord[i]
-            }
         }
-    } 
-    //advances row, resets cellCounter, and resets userword
+    }
     rowCounter += 1;
     cellCounter = 0;
     userWord = '';
