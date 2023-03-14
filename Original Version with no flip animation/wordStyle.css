@@ -58,7 +58,7 @@ div.winner, div.loser {
 
 table.main-game {
     table-layout: fixed;
-    width: 40%;
+    width:40%;
     border-collapse: separate;
     vertical-align: center;
     margin: auto;
@@ -69,10 +69,11 @@ table.main-game {
 tr.word-container td {
     position: relative;
     padding-bottom: 15%; /* Set the padding as a percentage of the width */
-    background-color: rgb(217, 217, 215);
+    border: .4vw solid rgb(255, 255, 255);
     text-align: center;
     vertical-align: middle;
-    border: .4vw solid rgb(255, 255, 255);
+    background-color: rgb(217, 217, 215);
+    z-index: 1;
 }
 
 div.letter-container {
@@ -82,41 +83,9 @@ div.letter-container {
     width: 100%;
     height: 100%;
     display: flex;
-    align-items: start;
+    align-items: center;
     justify-content: center;
     overflow-y: hidden;
-
-}
-
-div.flipper {
-    position: relative;
-    height: 100%;
-    transition: transform 1s;
-    transform-style: preserve-3d;
-}
-
-.flipper.is-flipped {
-    transform: rotateY(180deg);
-}
-
-.card__face {
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    overflow: hidden;
-}
-
-.letter-front, .letter-back {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-
-.card__face.letter-back {
-    transform: rotateY(180deg);
 }
 
 div.letter-container * {
@@ -124,13 +93,12 @@ div.letter-container * {
 }
 
 span.game-letters {
-    align-self: center;
-    justify-content: center;
-    align-items: center;
+    position: absolute;
     font-family: 'Shantell Sans', cursive;
     font-size: 5vw;
-    white-space: nowrap;    
+    text-align: center;
     max-width: 80%;
+    white-space: nowrap;
 }
 
 .title {

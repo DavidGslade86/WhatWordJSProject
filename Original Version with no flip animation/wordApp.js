@@ -5780,7 +5780,6 @@ function checkWord(userWord, wordArray){
    return false;
 }
 
-
 //checks if user guess contains or matches letters in secret word and changes backgrounds of letter containing UI and Keyboard letters.
 function enterGuess(userWord, secretWord) {
     const row = document.querySelector(`#row-${rowCounter}`);
@@ -5797,16 +5796,12 @@ function enterGuess(userWord, secretWord) {
     
     const matchArr = [];
     const doubleLetCheck = secretWord.split("");
-    
+
     for(let i = 0; i < userWord.length; i++){
-
-        let currCell = document.getElementById(`back-guess-${rowCounter}-${i+1}`);
-        
-        console.log(currCell);
-
         if(secretWord[i] === userWord[i]){
             matchArr.push(true);
             doubleLetCheck[i] = ' ';
+            let currCell = document.querySelector(`#guess-${rowCounter}-${i+1}`);
             currCell.parentNode.style.backgroundColor = "rgb(14, 192, 14)";
             checkUpdateBkGrnd (keyCell, "rgb(14, 192, 14)", userWord[i]);
 
@@ -5819,14 +5814,9 @@ function enterGuess(userWord, secretWord) {
     }
 
     for(let i = 0; i < userWord.length; i++){
-
-        let currCell = document.getElementById(`back-guess-${rowCounter}-${i+1}`);
-
-        console.log(currCell.parentNode.parentNode);
-
-        currCell.parentNode.parentNode.classList.toggle("is-flipped");
-
+        
         if (doubleLetCheck.includes(userWord[i]) && matchArr[i] === false) {
+            let currCell = document.querySelector(`#guess-${rowCounter}-${i+1}`);
             if(currCell.parentNode.style.backgroundColor !== "rgb(14, 192, 14)"){
                 currCell.parentNode.style.backgroundColor = "rgb(226, 226, 23)";
             }
@@ -5841,13 +5831,11 @@ function enterGuess(userWord, secretWord) {
         } else if (secretWord.includes(userWord[i]) === false && guessedLetters.includes(userWord[i]) === false) {
             checkUpdateBkGrnd (keyCell, "rgb(153, 150, 150)", userWord[i]);
         }
-        
     }
     rowCounter += 1;
     cellCounter = 0;
     userWord = '';
     return userWord;
-
 }
 
 //maps keyboard buttons with matching text content to corresponding keyboard keystrokes
@@ -5877,10 +5865,8 @@ letKeys.forEach((letKey) => {
             console.log(userWord);
 
             //update table with letter
-            const frontTableCell = document.querySelector(`#front-guess-${rowCounter}-${cellCounter}`);
-            const backTableCell = document.querySelector(`#back-guess-${rowCounter}-${cellCounter}`);
-            frontTableCell.textContent = letter;
-            backTableCell.textContent = letter;
+            const tableCell = document.querySelector(`#guess-${rowCounter}-${cellCounter}`);
+            tableCell.textContent = letter;
 
         }
     });
@@ -5889,10 +5875,8 @@ letKeys.forEach((letKey) => {
 //creates delete key that removes last letter from table and userword
 document.querySelector('.delete-key').addEventListener('click', function removeLetter(){
     if (cellCounter > 0){
-        const frontTableCell = document.querySelector(`#front-guess-${rowCounter}-${cellCounter}`);
-        const backTableCell = document.querySelector(`#back-guess-${rowCounter}-${cellCounter}`);
-        frontTableCell.textContent = "";
-        backTableCell.textContent = "";
+        const tableCell = document.querySelector(`#guess-${rowCounter}-${cellCounter}`);
+        tableCell.textContent = "";
         userWord = userWord.substring(0, userWord.length - 1);
         cellCounter -= 1;
     }
@@ -5901,6 +5885,19 @@ document.querySelector('.delete-key').addEventListener('click', function removeL
 //tests userWord for validity and progresses the game
 document.querySelector('.enter-key').addEventListener('click', function progressGame(){
     const endPage = document.querySelector('.opaque-cover');
+    
+    //displays modal and losing div if player makes more than 6 guesses
+    if(rowCounter > 5){
+        endPage.style.display = 'block';
+        document.querySelector(".winner").style.display = 'none';
+        document.querySelector(".loser").style.display = 'block';
+        document.querySelector("#loseText").innerHTML = `Awww, too bad.  Maybe next time? The secret word was ${secretWord.toUpperCase()}`;
+        document.addEventListener('keydown', function(event){
+            if (event.key === "Enter"){
+                document.querySelector('#playAgain').click();
+            }
+        });
+    }
     
     // displays error if word is less than 5 letters
     if(cellCounter <5){
@@ -5918,28 +5915,9 @@ document.querySelector('.enter-key').addEventListener('click', function progress
             wordError.style.display = 'none';
         },1500);
 
-
-    //displays modal and losing div if player makes more than 6 guesses
-    } else if (rowCounter > 5){
-        enterGuess (userWord, secretWord);
-        cellCounter = 5;
-        setTimeout(function loseGame(){
-            endPage.style.display = 'block';
-            document.querySelector(".winner").style.display = 'none';
-            document.querySelector(".loser").style.display = 'block';
-            document.querySelector("#loseText").innerHTML = `Awww, too bad.  Maybe next time? The secret word was ${secretWord.toUpperCase()}`;
-            document.addEventListener('keydown', function(event){
-                if (event.key === "Enter"){
-                    document.querySelector('#playAgain').click();
-                }
-            });
-        }, 2000);
-
     //displays win screen if correct word is guessed
     } else if (userWord === secretWord){
-        enterGuess (userWord, secretWord);
-        setTimeout(function winGame(){
-                    endPage.style.display = 'block';
+        endPage.style.display = 'block';
         document.querySelector(".winner").style.display = 'block';
         document.querySelector(".loser").style.display = 'none';
         document.addEventListener('keydown', function(event){
@@ -5947,8 +5925,6 @@ document.querySelector('.enter-key').addEventListener('click', function progress
                 document.querySelector('#playAgain').click();
             }
         });
-        },2000);
-
 
     //main gameplay function **see above**
     } else {

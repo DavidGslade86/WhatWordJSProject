@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" href="wordStyle.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caudex&family=GFS+Neohellenic:wght@700&family=Shantell+Sans:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="text-center p-2" id = "card-holder">
+        <h1 class ="heading title"> What Word?</h1>
+        <div class="error" id="wordError" style = "display: none;">
+            <p>Sorry, that's not on our word list.</p>
+        </div>
+        <div class="error" id="letterNumError" style = "display: none;">
+            <p>Sorry, that's not enough letters.</p>
+        </div>
+        <div class="table-container">
+            <table class = "main-game">
+                <tbody>
+                    <tr class = "word-container" id = "row-1">  
+                        <td>
+                            <div class="letter-container">
+                                <span class = 'game-letters' id = "guess-1-1"></span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="letter-container" >
+                                <span class = 'game-letters' id = "guess-1-2"></span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="letter-container">
+                                <span class = 'game-letters' id = 'guess-1-3'></span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="letter-container">
+                                <span class = 'game-letters' id = 'guess-1-4'></span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="letter-container">
+                                <span class = 'game-letters' id = 'guess-1-5'></span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class = "word-container" id = "row-2">  
+                        <td>
+                            <div class="letter-container">
+                                <span class = 'game-letters' id = "guess-2-1"></span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="letter-container" >
+                                <span class = 'game-letters' id = "guess-2-2"></span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="letter-container">
+                                <span class = 'game-letters' id = 'guess-2-3'></span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="letter-container">
+                                <span class = 'game-letters' id = 'guess-2-4'></span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="letter-container">
+                                <span class = 'game-letters' id = 'guess-2-5'></span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class = "word-container" id = "row-3">
+                        <td>
+                            <div class="letter-container">
+                                <span class = 'game-letters' id = "guess-3-1"></span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="letter-container" >
+                                <span class = 'game-letters' id = "guess-3-2"></span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="letter-container">
+                                <span class = 'game-letters' id = 'guess-3-3'></span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="letter-container">
+                                <span class = 'game-letters' id = 'guess-3-4'></span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="letter-container">
+                                <span class = 'game-letters' id = 'guess-3-5'></span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class = "word-container" id = "row-4">
+                        <td>
+                            <div class="letter-container">
+                                <span class = 'game-letters' id = "guess-4-1"></span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="letter-container" >
+                                <span class = 'game-letters' id = "guess-4-2"></span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="letter-container">
+                                <span class = 'game-letters' id = 'guess-4-3'></span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="letter-container">
+                                <span class = 'game-letters' id = 'guess-4-4'></span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="letter-container">
+                                <span class = 'game-letters' id = 'guess-4-5'></span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class = "word-container" id = "row-5">
+                        <td>
+                            <div class="letter-container">
+                                <span class = 'game-letters' id = "guess-5-1"></span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="letter-container" >
+                                <span class = 'game-letters' id = "guess-5-2"></span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="letter-container">
+                                <span class = 'game-letters' id = 'guess-5-3'></span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="letter-container">
+                                <span class = 'game-letters' id = 'guess-5-4'></span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="letter-container">
+                                <span class = 'game-letters' id = 'guess-5-5'></span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class = "word-container" id = "row-6">
+                        <td>
+                            <div class="letter-container">
+                                <span class = 'game-letters' id = "guess-6-1"></span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="letter-container" >
+                                <span class = 'game-letters' id = "guess-6-2"></span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="letter-container">
+                                <span class = 'game-letters' id = 'guess-6-3'></span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="letter-container">
+                                <span class = 'game-letters' id = 'guess-6-4'></span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="letter-container">
+                                <span class = 'game-letters' id = 'guess-6-5'></span>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="keyboard" id = "keyboard">
+            <table class = "key-table key-row-one">
+                <tbody>
+                    <tr class = "key-row-container" id = "first-key-row">  
+                        <td>
+                            <div class="key-letter-container">
+                                <button class = 'btn key-letters'>Q</button>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="key-letter-container">
+                                <button class = 'btn key-letters'>W</button>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="key-letter-container">
+                                <button class = 'btn key-letters'>E</button>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="key-letter-container">
+                                <button class = 'btn key-letters'>R</button>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="key-letter-container">
+                                <button class = 'btn key-letters'>T</button>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="key-letter-container">
+                                <button class = 'btn key-letters'>Y</button>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="key-letter-container">
+                                <button class = 'btn key-letters'>U</button>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="key-letter-container">
+                                <button class = 'btn key-letters'>I</button>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="key-letter-container">
+                                <button class = 'btn key-letters'>O</button>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="key-letter-container">
+                                <button class = 'btn key-letters'>P</button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class = "key-table key-row-two">
+                <tbody>
+                    <tr class = "key-row-container" id = "first-key-row">  
+                        <td>
+                            <div class="key-letter-container">
+                                <button class = 'btn key-letters'>A</button>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="key-letter-container">
+                                <button class = 'btn key-letters'>S</button>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="key-letter-container">
+                                <button class = 'btn key-letters'>D</button>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="key-letter-container">
+                                <button class = 'btn key-letters'>F</button>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="key-letter-container">
+                                <button class = 'btn key-letters'>G</button>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="key-letter-container">
+                                <button class = 'btn key-letters'>H</button>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="key-letter-container">
+                                <button class = 'btn key-letters'>J</button>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="key-letter-container">
+                                <button class = 'btn key-letters'>K</button>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="key-letter-container">
+                                <button class = 'btn key-letters'>L</button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class = "key-table key-row-one">
+                <tbody>
+                    <tr class = "key-row-container" id = "first-key-row">  
+                        <td class = "special">
+                            <div class="key-letter-container">
+                                <button class = 'btn enter-key' id = "enter">ENTER</button>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="key-letter-container">
+                                <button class = 'btn key-letters'>Z</button>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="key-letter-container">
+                                <button class = 'btn key-letters'>X</button>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="key-letter-container">
+                                <button class = 'btn key-letters'>C</button>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="key-letter-container">
+                                <button class = 'btn key-letters'>V</button>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="key-letter-container">
+                                <button class = 'btn key-letters'>B</button>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="key-letter-container">
+                                <button class = 'btn key-letters'>N</button>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="key-letter-container">
+                                <button class = 'btn key-letters'>M</button>
+                            </div>
+                        </td>
+                        <td class = "special">
+                            <div class="key-letter-container">
+                                <button class = 'btn delete-key'><i class="fa-solid fa-delete-left"></i></button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+ 
+    <div class="opaque-cover" style = "display: none;">   
+        <div class="winner" id = 'winScreen'>
+            <p>Congratulations! You guessed the word!</p>
+            <button onclick="window.location.reload();" class="btn btn-light" id="playAgain">Play Again?</button>
+        </div>
+        <div class="loser" id = 'loseScreen'>
+            <p id = "loseText">Awww, too bad.  Maybe next time?</p>
+            <button onclick="window.location.reload();" class="btn btn-light" id="playAgain">Play Again?</button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <script src = "wordApp.js"></script>
+</body>
+</html>
