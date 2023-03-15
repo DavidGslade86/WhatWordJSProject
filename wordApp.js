@@ -5783,7 +5783,7 @@ function checkWord(userWord, wordArray){
 
 //checks if user guess contains or matches letters in secret word and changes backgrounds of letter containing UI and Keyboard letters.
 function enterGuess(userWord, secretWord) {
-    const row = document.querySelector(`#row-${rowCounter}`);
+    //const row = document.querySelector(`#row-${rowCounter}`);
     const keyRow = document.querySelector('.keyboard');
     const keyCell = keyRow.querySelectorAll('button');
     
