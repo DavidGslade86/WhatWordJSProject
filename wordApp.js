@@ -5848,12 +5848,14 @@ function enterGuess(userWord, secretWord) {
             doubleLetCheck[doubleLetCheck.indexOf(userWord[i])] = " ";
             console.log(doubleLetCheck);
 
-        } else if (secretWord.includes(userWord[i]) === false && guessedLetters.includes(userWord[i]) === false) {
+        } else if (secretWord.includes(userWord[i]) === false || currCell.parentNode.style.backgroundColor === "") {
             setTimeout(function changeNoMatch(){
                 currCell.parentNode.style.backgroundColor = "rgb(153, 150, 150)";
             }, i*(1000));
             
-            checkUpdateBkGrnd (keyCell, "rgb(153, 150, 150)", userWord[i]);
+            if (guessedLetters.includes(userWord[i]) === false){
+                checkUpdateBkGrnd (keyCell, "rgb(153, 150, 150)", userWord[i]);
+            }
         }
         
     }
@@ -5895,7 +5897,7 @@ letKeys.forEach((letKey) => {
             const frontTableCell = document.querySelector(`#front-guess-${rowCounter}-${cellCounter}`);
             const backTableCell = document.querySelector(`#back-guess-${rowCounter}-${cellCounter}`);
             frontTableCell.textContent = letter;
-            frontTableCell.parentNode.parentNode.style.border = '.3vw solid rgb(153, 150, 150)';
+            frontTableCell.parentNode.parentNode.style.border = '.3vw solid rgba(0, 0, 0, 0.7)';
             backTableCell.textContent = letter;
 
         }
@@ -5908,6 +5910,7 @@ document.querySelector('.delete-key').addEventListener('click', function removeL
         const frontTableCell = document.querySelector(`#front-guess-${rowCounter}-${cellCounter}`);
         const backTableCell = document.querySelector(`#back-guess-${rowCounter}-${cellCounter}`);
         frontTableCell.textContent = "";
+        frontTableCell.parentNode.parentNode.style.border ="";
         backTableCell.textContent = "";
         userWord = userWord.substring(0, userWord.length - 1);
         cellCounter -= 1;
