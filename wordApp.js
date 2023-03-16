@@ -5788,11 +5788,14 @@ function enterGuess(userWord, secretWord) {
     const keyCell = keyRow.querySelectorAll('button');
     
     function checkUpdateBkGrnd (cell, color, letter) {
-        cell.forEach(function(guessLet) {
-            if (guessLet.textContent.toLowerCase() === letter.toLowerCase()){
-                guessLet.parentNode.style.backgroundColor = color;
-            }
-        });
+        setTimeout(function keyBoardKeyChange () {
+            cell.forEach(function(guessLet) {
+                if (guessLet.textContent.toLowerCase() === letter.toLowerCase()){
+                    guessLet.parentNode.style.backgroundColor = color;
+                }
+            });
+        }, 5000);
+
     }
     
     const matchArr = [];
@@ -5807,6 +5810,11 @@ function enterGuess(userWord, secretWord) {
         if(secretWord[i] === userWord[i]){
             matchArr.push(true);
             doubleLetCheck[i] = ' ';
+
+            setTimeout(function matchLetter(){
+                currCell.parentNode.style.backgroundColor = "rgb(14, 192, 14)";
+            }, i*(1000));
+            
             currCell.parentNode.style.backgroundColor = "rgb(14, 192, 14)";
             checkUpdateBkGrnd (keyCell, "rgb(14, 192, 14)", userWord[i]);
 
@@ -5824,7 +5832,9 @@ function enterGuess(userWord, secretWord) {
 
         console.log(currCell.parentNode.parentNode);
 
-        currCell.parentNode.parentNode.classList.toggle("is-flipped");
+        setTimeout(function inWord(){
+            currCell.parentNode.parentNode.classList.toggle("is-flipped");
+        }, i*(1000));
 
         if (doubleLetCheck.includes(userWord[i]) && matchArr[i] === false) {
             if(currCell.parentNode.style.backgroundColor !== "rgb(14, 192, 14)"){
@@ -5839,10 +5849,15 @@ function enterGuess(userWord, secretWord) {
             console.log(doubleLetCheck);
 
         } else if (secretWord.includes(userWord[i]) === false && guessedLetters.includes(userWord[i]) === false) {
+            setTimeout(function changeNoMatch(){
+                currCell.parentNode.style.backgroundColor = "rgb(153, 150, 150)";
+            }, i*(1000));
+            
             checkUpdateBkGrnd (keyCell, "rgb(153, 150, 150)", userWord[i]);
         }
         
     }
+
     rowCounter += 1;
     cellCounter = 0;
     userWord = '';
@@ -5880,6 +5895,7 @@ letKeys.forEach((letKey) => {
             const frontTableCell = document.querySelector(`#front-guess-${rowCounter}-${cellCounter}`);
             const backTableCell = document.querySelector(`#back-guess-${rowCounter}-${cellCounter}`);
             frontTableCell.textContent = letter;
+            frontTableCell.parentNode.parentNode.style.border = '.3vw solid rgb(153, 150, 150)';
             backTableCell.textContent = letter;
 
         }
@@ -5918,8 +5934,22 @@ document.querySelector('.enter-key').addEventListener('click', function progress
             wordError.style.display = 'none';
         },1500);
 
+    //displays win screen if correct word is guessed
+    } else if (userWord === secretWord){
+        enterGuess (userWord, secretWord);
+        setTimeout(function winGame(){
+            endPage.style.display = 'block';
+            document.querySelector(".winner").style.display = 'block';
+            document.querySelector(".loser").style.display = 'none';
+            document.addEventListener('keydown', function(event){
+                if (event.key === "Enter"){
+                    document.querySelector('#playAgain').click();
+                }
+            });
+        },6000);
 
-    //displays modal and losing div if player makes more than 6 guesses
+
+    //main gameplay function **see above**
     } else if (rowCounter > 5){
         enterGuess (userWord, secretWord);
         cellCounter = 5;
@@ -5933,22 +5963,7 @@ document.querySelector('.enter-key').addEventListener('click', function progress
                     document.querySelector('#playAgain').click();
                 }
             });
-        }, 2000);
-
-    //displays win screen if correct word is guessed
-    } else if (userWord === secretWord){
-        enterGuess (userWord, secretWord);
-        setTimeout(function winGame(){
-                    endPage.style.display = 'block';
-        document.querySelector(".winner").style.display = 'block';
-        document.querySelector(".loser").style.display = 'none';
-        document.addEventListener('keydown', function(event){
-            if (event.key === "Enter"){
-                document.querySelector('#playAgain').click();
-            }
-        });
-        },2000);
-
+        }, 6000);
 
     //main gameplay function **see above**
     } else {
