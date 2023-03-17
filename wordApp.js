@@ -5893,11 +5893,19 @@ letKeys.forEach((letKey) => {
             cellCounter += 1;
             console.log(userWord);
 
-            //update table with letter
+            //updates UI table with letter when letter button is clicked
             const frontTableCell = document.querySelector(`#front-guess-${rowCounter}-${cellCounter}`);
             const backTableCell = document.querySelector(`#back-guess-${rowCounter}-${cellCounter}`);
             frontTableCell.textContent = letter;
-            frontTableCell.parentNode.parentNode.style.border = '.3vw solid rgba(0, 0, 0, 0.7)';
+            frontTableCell.parentNode.parentNode.parentNode.style.outline = "black solid .4vh";
+            setTimeout(function(){
+                frontTableCell.parentNode.parentNode.parentNode.style.outline = "black solid .2vh";
+            }, 75);
+            setTimeout(function(){
+                frontTableCell.parentNode.parentNode.parentNode.style.outline = "";
+                frontTableCell.parentNode.parentNode.style.border = '.3vw solid rgba(0, 0, 0, 0.7)';
+            }, 150);
+             
             backTableCell.textContent = letter;
 
         }

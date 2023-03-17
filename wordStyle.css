@@ -85,7 +85,6 @@ div.letter-container {
     align-items: start;
     justify-content: center;
     overflow-y: hidden;
-
 }
 
 div.flipper {
@@ -93,6 +92,7 @@ div.flipper {
     height: 100%;
     transition: transform 1s;
     transform-style: preserve-3d;
+
 }
 
 .flipper.is-flipped {
