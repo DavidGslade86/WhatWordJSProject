@@ -4576,7 +4576,6 @@ export const WORDS = [
   'snots',
   'quais',
   'coked',
-  'gimel',
   'gorse',
   'minas',
   'goest',
