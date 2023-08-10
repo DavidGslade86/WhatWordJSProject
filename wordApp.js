@@ -1,5 +1,4 @@
 
-
 const wordArray = ['which',
 'there',
 'their',
@@ -5430,6 +5429,8 @@ let userWord = '';
 let cellCounter = 0;
 let rowCounter = 1;
 let guessedLetters = "";
+let acceptInput = true;
+const container = document.querySelector('#card-holder')
 
 //to help me cheat!
 console.log(secretWord);
@@ -5444,20 +5445,30 @@ function checkWord(userWord, wordArray){
    return false;
 }
 
-
 //checks if user guess contains or matches letters in secret word and changes backgrounds of letter containing UI and Keyboard letters.
+//disables UI while check and animations occur
 function enterGuess(userWord, secretWord) {
-    //const row = document.querySelector(`#row-${rowCounter}`);
+
     const keyRow = document.querySelector('.keyboard');
     const keyCell = keyRow.querySelectorAll('button');
     
+    container.style.pointerEvents = "none";
+    acceptInput = false;
     function checkUpdateBkGrnd (cell, color, letter) {
+        let gameOverCheck = false;
+        if(userWord === secretWord){
+            gameOverCheck = true;
+        }
         setTimeout(function keyBoardKeyChange () {
             cell.forEach(function(guessLet) {
                 if (guessLet.textContent.toLowerCase() === letter.toLowerCase()){
                     guessLet.parentNode.style.backgroundColor = color;
                 }
             });
+            if(!gameOverCheck){
+                acceptInput = true;
+                container.style.pointerEvents = "auto";
+            }
         }, 2500);
 
     }
@@ -5494,8 +5505,6 @@ function enterGuess(userWord, secretWord) {
 
         let currCell = document.getElementById(`back-guess-${rowCounter}-${i+1}`);
 
-        console.log(currCell.parentNode.parentNode);
-
         setTimeout(function inWord(){
             currCell.parentNode.parentNode.classList.toggle("is-flipped");
         }, i*(500));
@@ -5528,23 +5537,27 @@ function enterGuess(userWord, secretWord) {
     cellCounter = 0;
     userWord = '';
     return userWord;
-
 }
 
 //maps keyboard buttons with matching text content to corresponding keyboard keystrokes
 document.addEventListener('keydown', function(event){
-    letKeys.forEach(function(button){
-        if (button.textContent.toLowerCase() == event.key.toLowerCase()){
-            button.click();
+    if (!acceptInput){
+        event.preventDefault();
+        return;
+    } else {
+        letKeys.forEach(function(button){
+            if (button.textContent.toLowerCase() == event.key.toLowerCase()){
+                button.click();
+            }
+        });
+        if (event.key.toLowerCase() === 'backspace' || event.key.toLowerCase() === 'delete' || event.code === 46){
+            const deleteButton = document.querySelector('.delete-key');
+            deleteButton.click();
         }
-    });
-    if (event.key.toLowerCase() === 'backspace' || event.key.toLowerCase() === 'delete' || event.code === 46){
-        const deleteButton = document.querySelector('.delete-key');
-        deleteButton.click();
-    }
-    if (event.key === "Enter"){
-        const enterButton = document.querySelector('.enter-key');
-        enterButton.click();
+        if (event.key === "Enter"){
+            const enterButton = document.querySelector('.enter-key');
+            enterButton.click();
+        }
     }
 });
 
@@ -5594,7 +5607,7 @@ document.querySelector('.enter-key').addEventListener('click', function progress
     const endPage = document.querySelector('.opaque-cover');
     
     // displays error if word is less than 5 letters
-    if(cellCounter <5){
+    if(cellCounter < 5){
         const numLetError = document.querySelector('#letterNumError');
         numLetError.style.display = 'block';
         setTimeout(function(){
@@ -5621,8 +5634,9 @@ document.querySelector('.enter-key').addEventListener('click', function progress
                     document.querySelector('#playAgain').click();
                 }
             });
+            acceptInput = true;
+            container.style.pointerEvents = "auto";
         },4000);
-
 
     //main gameplay function **see above**
     } else if (rowCounter > 5){
